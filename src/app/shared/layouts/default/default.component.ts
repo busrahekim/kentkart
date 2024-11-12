@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './default.component.scss',
 })
 export class DefaultComponent {
-  componentTitle: string = 'KentKart System';
-  componentDesc: string =
+  readonly componentTitle: string = 'KentKart System';
+  readonly componentDesc: string =
     'An international company that provides public transportation fare collection services, where hundreds of thousands of instant data are processed, analyzed and reported.';
 }
