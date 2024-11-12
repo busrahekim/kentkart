@@ -36,6 +36,7 @@ export class TableComponent {
   @Output() add = new EventEmitter<void>();
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
+  @Output() showEmployees = new EventEmitter<number>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -57,5 +58,9 @@ export class TableComponent {
 
   onDelete(id: number) {
     this.delete.emit(id);
+  }
+
+  onShowEmployees(id: number): void {
+    this.showEmployees.emit(id);
   }
 }

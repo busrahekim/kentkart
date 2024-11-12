@@ -13,22 +13,56 @@
 
   <div class="w-full lg:w-1/2">
     <app-table
-    [title]="'Companies'"
+      [title]="'Companies'"
       [dataSource]="companyDataSource"
       [displayedColumns]="['id', 'name']"
       [isAuthenticated]="isAuthenticated"
       (add)="addCompany()"
       (edit)="editCompany($event)"
       (delete)="deleteCompany($event)"
+      (showEmployees)="showEmployees($event)"
     ></app-table>
   </div>
 </div>
 
-<!-- <form (ngSubmit)="addEmployee()"></form>
-  <mat-form-field appearance="fill">
-    <mat-label>Employee Name</mat-label>
-    <input matInput [(ngModel)]="newEmployee.name" name="name" required />
-  </mat-form-field>
+<app-slide-panel
+  [headerText]="getHeaderText()"
+  [isOpen]="isSlidePanelOpen"
+  [currentAction]="currentAction"
+  [employees]="companyEmployees"
+  (onClose)="onCloseSlidePanel()"
+>
+  <div *ngIf="currentAction === SlidePanelAction.ShowEmployees">
+    <ul class="list-disc pl-5">
+      <li *ngFor="let employee of companyEmployees" class="py-1">
+        {{ employee.name }}
+      </li>
+    </ul>
+  </div>
 
-  <button mat-raised-button type="submit">Add Employee</button>
-</form> -->
+  <div *ngIf="currentAction === SlidePanelAction.EditEmployee">
+    <app-edit-form
+      *ngIf="currentAction"
+      [entity]="selectedEntity"
+      [isEmployee]="currentAction === SlidePanelAction.EditEmployee"
+      (formSubmit)="onFormSubmit($event)"
+    ></app-edit-form>
+  </div>
+
+  <div *ngIf="currentAction === SlidePanelAction.AddEmployee">
+    <!-- TODO -->
+  </div>
+
+  <div *ngIf="currentAction === SlidePanelAction.EditCompany">
+    <app-edit-form
+      *ngIf="currentAction"
+      [entity]="selectedEntity"
+      [isEmployee]="currentAction === SlidePanelAction.EditCompany"
+      (formSubmit)="onFormSubmit($event)"
+    ></app-edit-form>
+  </div>
+
+  <div *ngIf="currentAction === SlidePanelAction.AddCompany">
+    <!-- TODO -->
+  </div>
+</app-slide-panel>

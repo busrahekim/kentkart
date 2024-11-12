@@ -1,14 +1,15 @@
 import { DBSchema } from 'idb';
 
 export interface Employee {
-  id?: number; // auto-incremented by IndexedDB
+  id?: number; 
   name: string;
   companyId: number;
 }
 
 export interface Company {
-  id?: number; // auto-incremented by IndexedDB
+  id?: number;
   name: string;
+  employees?: Employee[]; 
 }
 
 export interface MyDatabase extends DBSchema {
