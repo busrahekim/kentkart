@@ -1,0 +1,22 @@
+<header class="app-header">
+  <div class="container flex items-center justify-between">
+    <h4 class="font-bold text-xl text-blue-600">kENTKART SYSTEM</h4>
+    <div class="flex gap-3">
+      <button
+        *ngIf="!isAuthenticated"
+        routerLink="/login"
+        (click)="triggerLoginModal()"
+        class="btn btn-outline-primary py-2 px-4 flex items-center justify-center bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-blue-600"
+      >
+        Login
+      </button>
+      <button
+        *ngIf="isAuthenticated"
+        (click)="onLogout()"
+        class="btn btn-outline-primary py-2 px-4 flex items-center justify-center bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</header>

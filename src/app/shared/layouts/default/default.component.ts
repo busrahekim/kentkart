@@ -1,16 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
+import { LoginModalComponent } from '../../components/login-modal/login-modal.component';
 
 @Component({
   selector: 'app-default',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, HeaderComponent, LoginModalComponent],
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',
 })
 export class DefaultComponent {
-  readonly componentTitle: string = 'KentKart System';
-  readonly componentDesc: string =
-    'An international company that provides public transportation fare collection services, where hundreds of thousands of instant data are processed, analyzed and reported.';
+  loginModalVisible = false;
+
+  showLoginModal() {
+    this.loginModalVisible = true;
+  }
+
+  closeLoginModal() {
+    this.loginModalVisible = false;
+  }
 }

@@ -1,0 +1,59 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-3">
+    <span class="text-3xl font-sans">{{ title }}</span>
+    <button
+      mat-icon-button
+      (click)="onAdd()"
+      [disabled]="!isAuthenticated"
+      class="btn-add"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+    <ng-container
+      *ngFor="let column of displayedColumns"
+      [matColumnDef]="column"
+    >
+      <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[column]  }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          (click)="onEdit(element.id)"
+          [disabled]="!isAuthenticated"
+          class="btn-edit mx-2"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="onDelete(element.id)"
+          [disabled]="!isAuthenticated"
+          class="btn-delete"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns.concat('actions')"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns.concat('actions')"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [length]="dataSource.data.length"
+    [pageSize]="5"
+  ></mat-paginator>
+</div>

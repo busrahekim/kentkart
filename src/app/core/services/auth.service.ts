@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { Observable } from 'rxjs';
 
@@ -10,6 +11,8 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
 
+  router = inject(Router);
+
   constructor() {}
 
   async loginWithGoogle() {
@@ -18,7 +21,11 @@ export class AuthService {
         this.firebaseAuth,
         new GoogleAuthProvider()
       );
-      return res.user;
+      const currentUser = res.user;
+      if (currentUser) {
+        this.router.navigate(['/dashboard/edit']);
+      }
+      return currentUser;
     } catch (error) {
       console.error('Google login failed', error);
       throw error;
@@ -26,7 +33,9 @@ export class AuthService {
   }
 
   logout() {
-    return this.firebaseAuth.signOut();
+    return this.firebaseAuth.signOut().then(() => {
+      this.router.navigate(['/dashboard']);
+    });
   }
 
   isAuthenticated(): Observable<boolean> {

@@ -1,13 +1,10 @@
-<div class="grid grid-cols-1 md:grid-cols-2 h-screen">
-  <div class="bg-blue-600 flex flex-col gap-4 justify-center ps-28">
-    <h1 class="text-blue-100 text-3xl font-bold">{{ componentTitle }}</h1>
-    <p class="max-w-md text-blue-300 text-xl">
-      {{ componentDesc }}
-    </p>
+<app-header (showLoginModal)="showLoginModal()"></app-header>
+<main class="app-wrapper">
+  <div class="container py-6">
+    <router-outlet></router-outlet>
   </div>
-  <div class="flex w-full justify-center items-center">
-    <div class="w-1/2">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+</main>
+<app-login-modal
+  *ngIf="loginModalVisible"
+  (close)="closeLoginModal()"
+></app-login-modal>

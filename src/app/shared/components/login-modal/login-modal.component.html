@@ -1,0 +1,28 @@
+<div class="modal-backdrop" (click)="closeModal()"></div>
+<div class="modal-content flex flex-col gap-4">
+  <div class="header flex items-center justify-between">
+    <span class="text-xl text-blue-600">kENTKART SYSTEM</span>
+    <button
+      (click)="closeModal()"
+      class="close-btn text-xl text-gray-600 hover:text-black"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2 p-3 bg-white rounded-lg items-center justify-center">
+    <button
+      (click)="onGoogleLogin()"
+      class="btn btn-outline-primary w-full py-2 px-4 flex items-center justify-center bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100"
+    >
+      <span class="text-xl">
+        <span class="text-gray-900">Login with </span>
+        <span class="text-[#4285f4]">G</span>
+        <span class="text-[#ea4335]">o</span>
+        <span class="text-[#fbbc05]">o</span>
+        <span class="text-[#4285f4]">g</span>
+        <span class="text-[#34a853]">l</span>
+        <span class="text-[#ea4335]">e</span>
+      </span>
+    </button>
+  </div>
+</div>

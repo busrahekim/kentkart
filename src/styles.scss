@@ -22,9 +22,33 @@ body {
   }
 
   .btn-icon {
-    @apply inline-flex items-center gap-2;
+    @apply inline-flex items-center gap-2 rounded-lg p-1;
   }
 
+ .btn-add,
+.btn-edit,
+.btn-delete {
+  @apply btn-icon text-white transition-opacity duration-200 ease-in-out;
+
+  &.btn-add {
+    @apply bg-green-600;
+  }
+  &.btn-edit {
+    @apply bg-blue-600;
+  }
+  &.btn-delete {
+    @apply bg-red-600;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    opacity: 0.5; 
+    cursor: not-allowed; 
+  }
+}
   .btn-rounded {
     @apply rounded-full;
   }
@@ -74,3 +98,5 @@ body {
     @apply w-full py-2 px-3 outline-none border-2 border-gray-200 rounded-lg;
   }
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
