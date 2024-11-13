@@ -56,3 +56,5 @@ To run the project locally, follow these steps:
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+For more detailed documentation on components, services, and troubleshooting, please see the [documentation folder](docs/).
