@@ -75,7 +75,7 @@ export class DatabaseService {
   ): Promise<void> {
     const db = await this.dbPromise;
     const tx = db.transaction(['employees', 'companies'], 'readwrite');
-    const employeeStore = tx.objectStore('employees');
+    // const employeeStore = tx.objectStore('employees');
     const companyStore = tx.objectStore('companies');
 
     try {

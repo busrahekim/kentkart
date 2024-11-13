@@ -61,41 +61,76 @@ export class CompaniesComponent implements OnInit {
 
   async deleteCompany(companyId: number): Promise<void> {
     if (!this.isAuthenticated) return;
-   
-  const company = this.companyDataSource.data.find(c => c.id === companyId);
-  if (company) {
-    // Check if the company has employees
-    if (company.employees && company.employees.length > 0) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        data: { message: `The company has employees. Are you sure you want to delete this company?` }
-      });
 
-      const confirmed = await dialogRef.afterClosed().toPromise();
-      if (!confirmed) {
-        return; 
-      }
+    const company = this.companyDataSource.data.find((c) => c.id === companyId);
+    if (company) {
+      if (company.employees && company.employees.length > 0) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: {
+            message: `The company has employees. Are you sure you want to delete this company?`,
+          },
+        });
 
-     
-      for (const employee of company.employees) {
-        employee.companyId = -1; 
-        await this.databaseService.updateEmployee(employee);
+        const confirmed = await dialogRef.afterClosed().toPromise();
+        if (!confirmed) {
+          return;
+        }
+
+        for (const employee of company.employees) {
+          employee.companyId = -1;
+          await this.databaseService.updateEmployee(employee);
+        }
       }
     }
-  }
 
-  await this.databaseService.deleteCompany(companyId);
-  this.loadCompanies(); 
+    await this.databaseService.deleteCompany(companyId);
+    this.loadCompanies();
   }
 
   showEmployees(companyId: number): void {
     const company = this.companyDataSource.data.find((c) => c.id === companyId);
-    console.log(company);
 
     if (company && company.employees) {
       this.isSlidePanelOpen = true;
       this.companyEmployees = company.employees;
       this.currentAction = SlidePanelAction.ShowEmployees;
     }
+  }
+
+  async deleteEmployee(employeeId: number): Promise<void> {
+    if (!this.isAuthenticated) return;
+
+    const employee = this.companyEmployees.find((e) => e.id === employeeId);
+    if (employee) {
+      const companyId = employee.companyId;
+
+      if (companyId) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: {
+            message: `Are you sure you want to delete this employee from the company?`,
+          },
+        });
+
+        const confirmed = await dialogRef.afterClosed().toPromise();
+        if (!confirmed) {
+          return;
+        }
+
+        employee.companyId = -1;
+        await this.databaseService.updateEmployee(employee);
+
+        await this.databaseService.removeEmployeeFromCompany(
+          employeeId,
+          companyId
+        );
+
+        this.companyEmployees = this.companyEmployees.filter(
+          (e) => e.id !== employeeId
+        );
+      }
+    }
+
+    this.loadCompanies();
   }
 
   openSlidePanel() {

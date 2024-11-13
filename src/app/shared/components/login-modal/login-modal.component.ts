@@ -23,8 +23,7 @@ export class LoginModalComponent {
     }
   }
 
-  closeModal() {
-  
+  closeModal() {  
     this.close.emit();
   }
 }

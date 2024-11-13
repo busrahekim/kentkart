@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SearchBarComponent {
   @Output() search = new EventEmitter<string>();
+  @Input() isAuthenticated: boolean = false; 
   
   onSearchChange(event: Event): void {
     const input = event.target as HTMLInputElement; 

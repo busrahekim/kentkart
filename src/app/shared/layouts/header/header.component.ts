@@ -9,7 +9,6 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { LoginModalComponent } from '../../components/login-modal/login-modal.component';
 
 @Component({
   selector: 'app-header',

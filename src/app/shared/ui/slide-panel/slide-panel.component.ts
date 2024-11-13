@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { SlidePanelAction } from '../../../core/constants/enums';
 import { MatIconModule } from '@angular/material/icon';
@@ -44,6 +38,7 @@ export class SlidePanelComponent {
 
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onRefresh = new EventEmitter<void>();
+  @Output() onDeleteEmployee = new EventEmitter<number>();
 
   constructor(private databaseService: DatabaseService) {}
 
@@ -54,9 +49,7 @@ export class SlidePanelComponent {
   get newHeaderText(): string {
     switch (this.currentAction) {
       case SlidePanelAction.ShowEmployees:
-        return `${
-          this.entityType === 'Employee' ? 'Employee' : 'Company'
-        } List`;
+        return 'Company Employee  List';
       case SlidePanelAction.EditEmployee:
       case SlidePanelAction.EditCompany:
         return `Edit ${this.entityType}`;
@@ -87,9 +80,6 @@ export class SlidePanelComponent {
   }
 
   async onFormSubmit(updatedEntity: Employee | Company): Promise<void> {
-    console.log(this.entity);
-
-    console.log(updatedEntity);
     if (!updatedEntity) return;
 
     if (this.isEditAction()) {
@@ -109,7 +99,7 @@ export class SlidePanelComponent {
               employee.id!,
               previousCompanyId
             );
-          } 
+          }
           await this.databaseService.addEmployeeToCompany(
             employee.id!,
             employee.companyId!
@@ -141,5 +131,9 @@ export class SlidePanelComponent {
 
     this.onRefresh.emit();
     this.onClosePanel();
+  }
+
+  deleteEmployee(employeeId: number): void {
+    this.onDeleteEmployee.emit(employeeId);
   }
 }
