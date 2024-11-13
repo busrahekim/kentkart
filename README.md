@@ -10,7 +10,7 @@ The project is organized into several key directories:
   - **app/**: The core application components, including core, pages and shared components.
   - **shared/**: Reusable components, services, and utilities.
   - **assets/**: Static assets such as styles and images.
-  - **environments/**: Configuration files for different environments (development, production).
+  - **environment.ts: Configuration file for development.
 
 ## Features
 - User authentication with Google login.
@@ -45,7 +45,10 @@ To run the project locally, follow these steps:
    npm install
    ```
 
-4. Set up your Firebase configuration in `src/environments/environment.ts`.
+4. Set up your Firebase configuration in `src/environment.ts`.
+4.1. Go to `src/` and duplicate `env.example.ts`.
+4.2. Rename the duplicate file to `environment.ts` for development.
+4.3. Replace the placeholder values (e.g., `<YOUR_FIREBASE_API_KEY>`) with your own Firebase credentials.
 
 5. Start the development server:
    ```bash

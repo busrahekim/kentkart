@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Company, Employee } from '../../../core/models/dbSchema.model';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-edit-form',
@@ -26,7 +26,7 @@ export class EditFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
       companyId: [null],
     });
   }
@@ -52,6 +52,7 @@ export class EditFormComponent implements OnInit {
       this.formSubmit.emit(updatedEntity);
     } else {
       console.error('Form is invalid');
+      this.form.get('name')?.markAsTouched();
     }
   }
 }

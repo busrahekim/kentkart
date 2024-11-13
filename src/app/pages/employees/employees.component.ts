@@ -86,19 +86,26 @@ export class EmployeesComponent implements OnInit {
     );
     if (employee) {
       const companyId = employee.companyId;
+      
+      let message: string; 
+      if (companyId && companyId !== -1) {
+        message = `The employee is associated with a company. Are you sure you want to delete this employee?`;
+      } else {
+        message = `Are you sure you want to delete this employee?`; 
+      }
 
-      if (companyId) {
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          data: {
-            message: `The employee is associated with a company. Are you sure you want to delete this employee?`,
-          },
-        });
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: {
+          message: message,
+        },
+      });
 
-        const confirmed = await dialogRef.afterClosed().toPromise();
-        if (!confirmed) {
-          return;
-        }
+      const confirmed = await dialogRef.afterClosed().toPromise();
+      if (!confirmed) {
+        return;
+      }
 
+      if (companyId && companyId !== -1) {
         await this.databaseService.removeEmployeeFromCompany(
           employeeId,
           companyId
