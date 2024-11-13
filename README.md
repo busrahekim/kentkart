@@ -1,18 +1,21 @@
 # Kentkart System
 
 ## Overview
+
 The Kentkart System is a web application designed to manage employees and companies. It provides functionalities for adding, editing, and deleting records, as well as managing employee-company relationships.
 
 ## Project Structure
+
 The project is organized into several key directories:
 
 - **src/**: Contains the main application code.
   - **app/**: The core application components, including core, pages and shared components.
   - **shared/**: Reusable components, services, and utilities.
   - **assets/**: Static assets such as styles and images.
-  - **environment.ts: Configuration file for development.
+  - \*\*environment.ts: Configuration file for development.
 
 ## Features
+
 - User authentication with Google login.
 - CRUD operations for employees and companies.
 - Responsive design with a modern UI.
@@ -21,6 +24,7 @@ The project is organized into several key directories:
 - Utilizes IndexedDB for efficient local data storage.
 
 ## Technologies Used
+
 - Angular: The primary framework for building the application.
 - Angular Material: For UI components and styling.
 - Firebase: For authentication services.
@@ -28,29 +32,35 @@ The project is organized into several key directories:
 - IndexedDB: For local data storage and management
 
 ## Getting Started
+
 To run the project locally, follow these steps:
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd kentkart
    ```
 
 3. Install the dependencies:
+
    ```bash
    npm install
    ```
 
 4. Set up your Firebase configuration in `src/environment.ts`.
-4.1. Go to `src/` and duplicate `env.example.ts`.
-4.2. Rename the duplicate file to `environment.ts` for development.
-4.3. Replace the placeholder values (e.g., `<YOUR_FIREBASE_API_KEY>`) with your own Firebase credentials.
+
+   1. Go to `src/` and duplicate `environment.example.ts`.
+   2. Rename the duplicate file to `environment.ts` for development.
+   3. Replace the placeholder values (e.g., `<YOUR_FIREBASE_API_KEY>`) with your own Firebase credentials.
 
 5. Start the development server:
+
    ```bash
    ng serve
    ```
@@ -58,6 +68,7 @@ To run the project locally, follow these steps:
 6. Open your browser and navigate to `http://localhost:4200`.
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 For more detailed documentation on components, services, and troubleshooting, please see the [documentation folder](docs/).
