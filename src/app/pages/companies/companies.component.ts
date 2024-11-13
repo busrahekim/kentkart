@@ -64,18 +64,24 @@ export class CompaniesComponent implements OnInit {
 
     const company = this.companyDataSource.data.find((c) => c.id === companyId);
     if (company) {
+      const defaultMessage = `Are you sure you want to delete this company?`;
+      let message = defaultMessage;
+
       if (company.employees && company.employees.length > 0) {
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          data: {
-            message: `The company has employees. Are you sure you want to delete this company?`,
-          },
-        });
+        message = `The company has employees. ${defaultMessage}`;
+      }
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: {
+          message: message,
+        },
+      });
 
-        const confirmed = await dialogRef.afterClosed().toPromise();
-        if (!confirmed) {
-          return;
-        }
+      const confirmed = await dialogRef.afterClosed().toPromise();
+      if (!confirmed) {
+        return;
+      }
 
+      if (company.employees && company.employees.length > 0) {
         for (const employee of company.employees) {
           employee.companyId = -1;
           await this.databaseService.updateEmployee(employee);

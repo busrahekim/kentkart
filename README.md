@@ -9,10 +9,9 @@ The Kentkart System is a web application designed to manage employees and compan
 The project is organized into several key directories:
 
 - **src/**: Contains the main application code.
-  - **app/**: The core application components, including core, pages and shared components.
-  - **shared/**: Reusable components, services, and utilities.
-  - **assets/**: Static assets such as styles and images.
-  - \*\*environment.ts: Configuration file for development.
+- **app/**: The core application components, including core, pages and shared components.
+- **shared/**: Reusable components, services, and utilities.
+- **assets/**: Static assets such as styles and images.
 
 ## Features
 
