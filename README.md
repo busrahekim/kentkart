@@ -55,7 +55,7 @@ To run the project locally, follow these steps:
 
 4. Set up your Firebase configuration in `src/environment.ts`.
 
-   1. Go to `src/` and duplicate `environment.example.ts`.
+   1. Duplicate `environment.example.ts`.
    2. Rename the duplicate file to `environment.ts` for development.
    3. Replace the placeholder values (e.g., `<YOUR_FIREBASE_API_KEY>`) with your own Firebase credentials.
 
