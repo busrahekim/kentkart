@@ -1,9 +1,12 @@
 <app-header (showLoginModal)="showLoginModal()"></app-header>
-<main class="app-wrapper">
-  <div class="container py-6">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+<div class="layout">
+  <app-side-navbar></app-side-navbar>
+  <main class="content">
+    <div class="container py-6">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
 <app-login-modal
   *ngIf="loginModalVisible"
   (close)="closeLoginModal()"

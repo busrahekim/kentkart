@@ -3,7 +3,7 @@ import { DBSchema } from 'idb';
 export interface Employee {
   id?: number; 
   name: string;
-  companyId: number;
+  companyId?: number;
 }
 
 export interface Company {

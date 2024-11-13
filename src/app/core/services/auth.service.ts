@@ -23,7 +23,7 @@ export class AuthService {
       );
       const currentUser = res.user;
       if (currentUser) {
-        this.router.navigate(['/dashboard/edit']);
+        this.router.navigate(['/employees/edit']);
       }
       return currentUser;
     } catch (error) {
@@ -34,7 +34,7 @@ export class AuthService {
 
   logout() {
     return this.firebaseAuth.signOut().then(() => {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/employees']);
     });
   }
 

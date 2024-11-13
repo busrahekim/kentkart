@@ -1,4 +1,6 @@
 <div class="p-6">
+  <app-search-bar (search)="applyFilter($event)"></app-search-bar>
+
   <div class="flex justify-between items-center mb-3">
     <span class="text-3xl font-sans">{{ title }}</span>
     <button

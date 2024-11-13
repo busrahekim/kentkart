@@ -9,7 +9,7 @@
     <div
       class="flex relative p-5 justify-between items-center border-b border-r-gray-200"
     >
-      <h4 class="font-bold text-xl">{{ headerText }}</h4>
+      <h4 class="font-bold text-xl">{{ newHeaderText }}</h4>
       <mat-icon
         class="cursor-pointer text-gray-500 hover:text-gray-800 mb-2"
         (click)="onClosePanel()"
@@ -19,7 +19,20 @@
       </mat-icon>
     </div>
     <div class="flex flex-col p-5 app-slide-panel">
-      <ng-content></ng-content>
+      <ng-container *ngIf="isShowEmployeesAction()">
+        <ul class="list-disc pl-5">
+          <li *ngFor="let employee of employees" class="py-1">{{ employee.name }}</li>
+        </ul>
+      </ng-container>
+
+      <ng-container *ngIf="isEditAction() || isAddAction()">
+        <app-edit-form
+          [entity]="entity"
+          [isEmployee]="entityType === 'Employee'"
+          (formSubmit)="onFormSubmit($event)"
+          [companies]="companies"
+        ></app-edit-form>
+      </ng-container>
     </div>
   </div>
 </div>

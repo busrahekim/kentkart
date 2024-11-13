@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { openDB } from 'idb';
 import { Company, Employee, MyDatabase } from '../models/dbSchema.model';
-import { DUMMY_COMPANIES, DUMMY_EMPLOYEES } from '../constants/dummyData';
 
 @Injectable({
   providedIn: 'root',
@@ -26,38 +25,20 @@ export class DatabaseService {
 
   async getEmployees() {
     const db = await this.dbPromise;
-    const employees = await db.getAll('employees');
-
-    // If no employees in the DB, insert dummy data
-    if (employees.length === 0) {
-      await this.addDummyEmployees(DUMMY_EMPLOYEES);
-    }
-
     return db.getAll('employees');
   }
 
-  // Add employee(s)
   async addEmployee(employee: Employee): Promise<number> {
     const db = await this.dbPromise;
     return db.add('employees', employee);
   }
 
-  private async addDummyEmployees(employees: Employee[]): Promise<void> {
+  async updateEmployee(employee: Employee): Promise<void> {
     const db = await this.dbPromise;
-    // const tx = db.transaction('employees', 'readwrite');
-    // const store = tx.objectStore('employees');
-
-    // // Use a loop to add all employees
-    // employees.forEach((employee) => {
-    //   store.add(employee);
-
-    // });
-
-    // await tx.done; //
-
-    for (const employee of employees) {
-      await db.add('employees', employee);
-    }
+    const tx = db.transaction('employees', 'readwrite');
+    const store = tx.objectStore('employees');
+    await store.put(employee);
+    await tx.done;
   }
 
   async deleteEmployee(id: number) {
@@ -67,28 +48,20 @@ export class DatabaseService {
 
   async getCompanies() {
     const db = await this.dbPromise;
-    const companies = await db.getAll('companies');
-
-    // If no companies in the DB, insert dummy data
-    if (companies.length === 0) {
-      await this.addDummyCompanies(DUMMY_COMPANIES);
-    }
-
     return db.getAll('companies');
   }
 
-  // Add company
   async addCompany(company: Company): Promise<number> {
     const db = await this.dbPromise;
     return db.add('companies', company);
   }
 
-  // Add dummy companies if needed
-  private async addDummyCompanies(companies: Company[]): Promise<void> {
+  async updateCompany(company: Company): Promise<void> {
     const db = await this.dbPromise;
-    for (const company of companies) {
-      await db.add('companies', company);
-    }
+    const tx = db.transaction('companies', 'readwrite');
+    const store = tx.objectStore('companies');
+    await store.put(company);
+    await tx.done;
   }
 
   async deleteCompany(id: number) {
@@ -96,40 +69,73 @@ export class DatabaseService {
     return db.delete('companies', id);
   }
 
-  //TODO: indexeddb.service.ts (updated)
-  // addEmployeeToCompany(employeeId: number, companyId: number): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     const transaction = this.db.transaction('employees', 'readwrite');
-  //     const employeeStore = transaction.objectStore('employees');
-  //     const companyStore = transaction.objectStore('companies');
+  async removeEmployeeFromCompany(
+    employeeId: number,
+    companyId: number
+  ): Promise<void> {
+    const db = await this.dbPromise;
+    const tx = db.transaction(['employees', 'companies'], 'readwrite');
+    const employeeStore = tx.objectStore('employees');
+    const companyStore = tx.objectStore('companies');
 
-  //     const employeeRequest = employeeStore.get(employeeId);
-  //     const companyRequest = companyStore.get(companyId);
+    try {
+      const company = await companyStore.get(companyId);
 
-  //     employeeRequest.onsuccess = () => {
-  //       const employee = employeeRequest.result;
-  //       const company = companyRequest.result;
+      if (!company || !company.employees) {
+        console.log('Company not found or has no employees:', companyId);
+        return;
+      }
 
-  //       if (employee && company) {
-  //         // Add employee to company's employee list
-  //         if (!company.employees) {
-  //           company.employees = [];
-  //         }
-  //         company.employees.push(employeeId);
+      company.employees = company.employees.filter(
+        (emp) => emp.id !== employeeId
+      );
 
-  //         // Update the company and employee data
-  //         const updateCompanyRequest = companyStore.put(company);
-  //         const updateEmployeeRequest = employeeStore.put(employee);
+      await companyStore.put(company);
+      await tx.done;
+    } catch (error) {
+      console.error('Error in removeEmployeeFromCompany:', error);
+    }
+  }
 
-  //         updateCompanyRequest.onsuccess = () => resolve(company);
-  //         updateEmployeeRequest.onsuccess = () => resolve(employee);
-  //       } else {
-  //         reject('Employee or Company not found');
-  //       }
-  //     };
+  async addEmployeeToCompany(
+    employeeId: number,
+    companyId: number
+  ): Promise<void> {
+    if (companyId == -1 || !companyId) {
+      console.log('No company assigned to the employee.');
+      return;
+    }
 
-  //     employeeRequest.onerror = (e) => reject(e);
-  //     companyRequest.onerror = (e) => reject(e);
-  //   });
-  // }
+    const db = await this.dbPromise;
+    const tx = db.transaction(['employees', 'companies'], 'readwrite');
+    const employeeStore = tx.objectStore('employees');
+    const companyStore = tx.objectStore('companies');
+
+    try {
+      const employee = await employeeStore.get(employeeId);
+      const newCompany = await companyStore.get(companyId);
+
+      if (!newCompany) {
+        console.error('Company not found for ID:', companyId);
+        return;
+      }
+
+      if (!employee) {
+        console.error('Employee not found for ID:', employeeId);
+        return;
+      }
+
+      if (newCompany.employees) {
+        newCompany.employees.push(employee);
+      } else {
+        newCompany.employees = [employee];
+      }
+
+      await companyStore.put(newCompany);
+
+      await tx.done;
+    } catch (error) {
+      console.error('Error in addEmployeeToCompany:', error);
+    }
+  }
 }

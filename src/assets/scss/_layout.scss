@@ -12,3 +12,18 @@
     height: calc(100vh - $header-height);
     @apply relative overflow-y-auto;
   }
+
+  .layout {
+    display: flex;
+    margin-top: $header-height;
+    flex-direction: row;
+  }
+
+  .content {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+ 
+  

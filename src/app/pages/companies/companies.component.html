@@ -1,0 +1,21 @@
+<app-table
+  [title]="'Companies'"
+  [dataSource]="companyDataSource"
+  [displayedColumns]="['id', 'name']"
+  [isAuthenticated]="isAuthenticated"
+  (add)="addCompany()"
+  (edit)="editCompany($event)"
+  (delete)="deleteCompany($event)"
+  (showEmployees)="showEmployees($event)"
+></app-table>
+
+<app-slide-panel
+  [isOpen]="isSlidePanelOpen"
+  [currentAction]="currentAction"
+  [employees]="companyEmployees"
+  [entityType]="'Company'"
+  [entity]="selectedEntity"
+  (onClose)="onCloseSlidePanel()"
+  (onRefresh)="onRefreshData()"
+>
+</app-slide-panel>

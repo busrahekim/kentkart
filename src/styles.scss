@@ -25,7 +25,7 @@ body {
     @apply inline-flex items-center gap-2 rounded-lg p-1;
   }
 
- .btn-add,
+.btn-add,
 .btn-edit,
 .btn-delete,
 .btn-show-employees {
@@ -102,6 +102,7 @@ body {
   .form-select {
     @apply w-full py-2 px-3 outline-none border-2 border-gray-200 rounded-lg;
   }
+  
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
