@@ -13,11 +13,7 @@ import { ConfirmDialogComponent } from '../../shared/ui/dialogs/confirm-dialog/c
 @Component({
   selector: 'app-employees',
   standalone: true,
-  imports: [
-    CommonModule,
-    TableComponent,
-    SlidePanelComponent,
-  ],
+  imports: [CommonModule, TableComponent, SlidePanelComponent],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -86,12 +82,12 @@ export class EmployeesComponent implements OnInit {
     );
     if (employee) {
       const companyId = employee.companyId;
-      
-      let message: string; 
-      if (companyId && companyId !== -1) {
+
+      let message: string;
+      if (companyId && companyId != -1) {
         message = `The employee is associated with a company. Are you sure you want to delete this employee?`;
       } else {
-        message = `Are you sure you want to delete this employee?`; 
+        message = `Are you sure you want to delete this employee?`;
       }
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {

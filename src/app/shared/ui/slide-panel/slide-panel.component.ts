@@ -107,7 +107,7 @@ export class SlidePanelComponent {
         } else if (employee.companyId === -1) {
           await this.databaseService.updateEmployee(employee);
         } else {
-          console.log('nothing updated');
+          console.log('Nothing updated');
         }
       } else if (this.entityType === 'Company') {
         await this.databaseService.updateCompany(updatedEntity as Company);
